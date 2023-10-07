@@ -1,74 +1,111 @@
 #include <iostream>
-#include "StackType.cpp"
-#include <string>
+#include "QueType.cpp"
 using namespace std;
 
-bool IsEqual(const string & input){
-    StackType<char> parenthesesStack;
 
+void printBinaryValues(int n) {
+    QueType<string> queue;
 
-    for(char ch : input){
-        if(ch == '('){
-            parenthesesStack.Push(ch);
-        }else if(ch == ')'){
-            if(parenthesesStack.IsEmpty()){
-                return false;
-            }else{
-                parenthesesStack.Pop();
-            }
-        }
+    queue.Enqueue("1");
+
+    for (int i = 0; i < n; i++) {
+        string binary;
+        queue.Dequeue(binary);
+        cout << binary << endl;
+        queue.Enqueue(binary + "0");
+        queue.Enqueue(binary + "1");
     }
-
-    return parenthesesStack.IsEmpty();
 }
+
 int main() {
-    StackType<int> stack;
-    StackType<int> tempStack;
-    if(stack.IsEmpty()){
-        cout << "The stack is empty" << endl;
+    QueType<int> TestQue(5);
+    if(TestQue.IsEmpty()){
+        cout << "This Queue Is empty"<< endl;
     }else{
-        cout << "The stack is not empty" << endl;
+        cout << "This Queue not Is empty"<< endl;
     }
-    stack.Push(5);
-    stack.Push(7);
-    stack.Push(4);
-    stack.Push(2);
-    if(stack.IsFull()){
-        cout << "The stack is Full" << endl;
+
+    TestQue.Enqueue(5);
+    TestQue.Enqueue(7);
+    TestQue.Enqueue(4);
+    TestQue.Enqueue(2);
+
+    if(TestQue.IsEmpty()){
+        cout << "This Queue Is empty" << endl;
     }else{
-        cout << "The stack is not Full" << endl;
+        cout << "This Queue not Is empty" << endl;
     }
 
-    while(!stack.IsEmpty()){
-        tempStack.Push(stack.Top());
-        cout << stack.Top() << endl;
-        stack.Pop();
-    }
-
-    while(!tempStack.IsEmpty()){
-        stack.Push(tempStack.Top());
-        tempStack.Pop();
-    }
-
-    stack.Push(3);
-
-    if(stack.IsFull()){
-        cout << "The stack is Full" << endl;
+    if(TestQue.IsFull()){
+        cout << "This Queue Is full" << endl;
     }else{
-        cout << "The stack is not Full" << endl;
+        cout << "This Queue not Is full" << endl;
     }
 
-    stack.Pop();
-    stack.Pop();
-    cout << stack.Top() << endl;
+    TestQue.Enqueue(6);
 
-    string input;
-    cin >> input;
-    if(IsEqual(input)){
-        cout << "This string is Balanced";
+    if(TestQue.IsFull()){
+        cout << "This Queue Is full" << endl;
     }else{
-        cout << "This string is not Balanced";
+        cout << "This Queue not Is full" << endl;
     }
 
+    QueType<int> SecondQue(5);
+
+    while(!TestQue.IsEmpty()){
+        int item;
+        TestQue.Dequeue(item);
+        cout << item << endl;
+        SecondQue.Enqueue(item);
+    }
+
+    if(SecondQue.IsFull()){
+        cout << "This Queue Is full" << endl;
+    }else{
+        cout << "This Queue not Is full" << endl;
+    }
+
+    //SecondQue.Enqueue(6);
+
+    int deque;
+    SecondQue.Dequeue(deque);
+    cout << deque <<endl;
+    SecondQue.Dequeue(deque);
+    cout << deque << endl;
+
+    cout << "Current Available Element: " << endl;
+    while(!SecondQue.IsEmpty()){
+        int item;
+        SecondQue.Dequeue(item);
+        cout << item << endl;
+        TestQue.Enqueue(item);
+    }
+
+    TestQue.Dequeue(deque);
+    cout << deque <<endl;
+    TestQue.Dequeue(deque);
+    cout << deque << endl;
+    TestQue.Dequeue(deque);
+    cout << deque << endl;
+
+    if(TestQue.IsEmpty()){
+        cout << "This Queue Is empty" << endl;
+    }else{
+        cout << "This Queue not Is empty" << endl;
+    }
+
+   // TestQue.Dequeue(deque);
+
+
+    int n;
+    cout << "Enter the value of n: ";
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Invalid input. Please enter a positive integer." << std::endl;
+    } else {
+        cout << "Binary values from 1 to " << n << " are:" << std::endl;
+        printBinaryValues(n);
+    }
 
 }
